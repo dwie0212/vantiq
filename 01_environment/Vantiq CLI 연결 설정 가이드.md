@@ -20,6 +20,8 @@ Vantiq CLI(Command Line Interface)를 사용해
     ```
     
 - Vantiq CLI ZIP 파일 다운로드 후 압축 해제
+- <img width="1200" height="556" alt="image" src="https://github.com/user-attachments/assets/09fa7f23-97e0-4752-b3b5-e812bab4641d" />
+
 - CLI 실행 파일이 PATH에 포함되어 있으면 편리함
 
 ---
