@@ -391,6 +391,30 @@ output "bastion_userdata" {
 }
 ```
 
+### Apple Silicon(darwin_arm64) 및 EKS 1.33+ 호환 수정
+
+### EKS 모듈 SSM 경로 수정
+
+EKS 1.33 이상부터 Amazon Linux 2 AMI가 제공되지 않습니다. `ami_type`을 `AL2023`으로 사용하는 경우 SSM Parameter 경로도 변경해야 합니다.
+
+**`modules/eks/eks.tf`** 수정:
+
+```hcl
+# 기존 (amazon-linux-2 — EKS 1.32 이하)
+data "aws_ssm_parameter" "eks_ami_release_version" {
+  for_each = var.managed_node_group_config
+  name     = "/aws/service/eks/optimized-ami/${each.value.kubernetes_version}/amazon-linux-2/recommended/release_version"
+}
+
+# 변경 (amazon-linux-2023 — EKS 1.33 이상)
+data "aws_ssm_parameter" "eks_ami_release_version" {
+  for_each = var.managed_node_group_config
+  name     = "/aws/service/eks/optimized-ami/${each.value.kubernetes_version}/amazon-linux-2023/x86_64/standard/recommended/release_version"
+}
+```
+
+> **참고**: 이 수정 없이 EKS 1.33 이상 + `AL2023_x86_64_STANDARD` 조합을 사용하면 `couldn't find resource` 에러가 발생합니다.
+
 ### 6. 네트워크 배포 (10_network)
 
 ```bash
@@ -416,30 +440,6 @@ terraform plan
 terraform apply
 # yes 입력 → 15~20분 소요 (EKS 클러스터 생성)
 ```
-
-## Apple Silicon(darwin_arm64) 및 EKS 1.33+ 호환 수정
-
-### EKS 모듈 SSM 경로 수정
-
-EKS 1.33 이상부터 Amazon Linux 2 AMI가 제공되지 않습니다. `ami_type`을 `AL2023`으로 사용하는 경우 SSM Parameter 경로도 변경해야 합니다.
-
-**`modules/eks/eks.tf`** 수정:
-
-```hcl
-# 기존 (amazon-linux-2 — EKS 1.32 이하)
-data "aws_ssm_parameter" "eks_ami_release_version" {
-  for_each = var.managed_node_group_config
-  name     = "/aws/service/eks/optimized-ami/${each.value.kubernetes_version}/amazon-linux-2/recommended/release_version"
-}
-
-# 변경 (amazon-linux-2023 — EKS 1.33 이상)
-data "aws_ssm_parameter" "eks_ami_release_version" {
-  for_each = var.managed_node_group_config
-  name     = "/aws/service/eks/optimized-ami/${each.value.kubernetes_version}/amazon-linux-2023/x86_64/standard/recommended/release_version"
-}
-```
-
-> **참고**: 이 수정 없이 EKS 1.33 이상 + `AL2023_x86_64_STANDARD` 조합을 사용하면 `couldn't find resource` 에러가 발생합니다.
 
 ### 8. EKS 접속 설정
 
