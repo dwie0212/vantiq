@@ -150,8 +150,8 @@ cp ~/vantiq-deploy/bastion_key* env-dev/
 locals {
   common_config = {
     cluster_name                   = "vantiq-dev"
-    cluster_version                = "1.29"
-    bastion_kubectl_version        = "1.29.0"
+    cluster_version                = "1.34"
+    bastion_kubectl_version        = "1.34.0"
     env_name                       = "dev"
     region                         = "ap-northeast-2"
     worker_access_private_key      = "worker_key"
@@ -224,7 +224,7 @@ locals {
     managed_node_group_config = {
       "VANTIQ" = {
         ami_type           = "AL2023_x86_64_STANDARD"
-        kubernetes_version = "1.29"
+        kubernetes_version = "1.34"
         instance_types     = ["c5.xlarge"]
         disk_size          = 40
         scaling_config = {
@@ -236,7 +236,7 @@ locals {
       },
       "MongoDB" = {
         ami_type           = "AL2023_x86_64_STANDARD"
-        kubernetes_version = "1.29"
+        kubernetes_version = "1.34"
         instance_types     = ["r5.xlarge"]
         disk_size          = 40
         scaling_config = {
@@ -248,7 +248,7 @@ locals {
       },
       "Keycloak" = {
         ami_type           = "AL2023_x86_64_STANDARD"
-        kubernetes_version = "1.29"
+        kubernetes_version = "1.34"
         instance_types     = ["m5.large"]
         disk_size          = 40
         scaling_config = {
@@ -260,7 +260,7 @@ locals {
       },
       "Grafana" = {
         ami_type           = "AL2023_x86_64_STANDARD"
-        kubernetes_version = "1.29"
+        kubernetes_version = "1.34"
         instance_types     = ["r5.xlarge"]
         disk_size          = 40
         scaling_config = {
@@ -272,7 +272,7 @@ locals {
       },
       "Metrics" = {
         ami_type           = "AL2023_x86_64_STANDARD"
-        kubernetes_version = "1.29"
+        kubernetes_version = "1.34"
         instance_types     = ["m5.xlarge"]
         disk_size          = 40
         scaling_config = {
@@ -284,7 +284,7 @@ locals {
       },
       "Ai_assistant" = {
         ami_type           = "AL2023_x86_64_STANDARD"
-        kubernetes_version = "1.29"
+        kubernetes_version = "1.34"
         instance_types     = ["c5.xlarge"]
         disk_size          = 40
         scaling_config = {
